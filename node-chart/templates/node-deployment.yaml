@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ template "node-chart.fullname" . }}-deployment
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: {{ template "node-chart.fullname" . }}-node
+  template:
+    metadata:
+      labels:
+        app: {{ template "node-chart.fullname" . }}-node
+    spec:
+      containers:
+        - name: node-app
+          image: dhenasmile/sample-node-app:1.0
+          livenessProbe:
+            httpGet:
+              path: /
+              port: http
+          readinessProbe:
+            httpGet:
+              path: /
+              port: http
+          env:
+            - name: MONGODB_URI
+              value: mongodb://{{ template "mongodb.fullname" . }}.default.svc.cluster.local:27017/{{ .Values.DbName }}
+            - name: NODE_ENV
+              value: production
+            - name: SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: mysecret
+                  key: secret
