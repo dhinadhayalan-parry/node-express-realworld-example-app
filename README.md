@@ -19,9 +19,9 @@ docker build -t dhenasmile/sample-node-app:1.0 .
 
 2. This example node codebase use Mangoose to connect with the MongoDb for storing data. This MongoDb server also deployed as a standalone instance with the persistence storage in the Kubernetes cluster and through added as a dependency to the helm chart.
 
-3. Running below command will take care of all the creating the deployment, secrets, and services to the kubernetes cluster.
+3. Running below command in the project workspace will take care of all the creating the deployment, secrets, and services to the kubernetes cluster.
 ```sh
-helm install nodejs .
+helm install nodejs node-chart/
 ```
 ## Application Structure
 
